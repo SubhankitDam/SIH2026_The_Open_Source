@@ -13,7 +13,7 @@
   * 4 IDs for our website, admin only accessible to us
   * Go into depth on how our solution works, how is it reliable and a strong emphasis on
   security including \***case study about the MITM attack at the seminar**\*
-  * Future plans (included in another file)
+  * [Future plans](future_plans.md)
 
 * **Last Slide: Research and References**
   * Pretty self-explanatory
