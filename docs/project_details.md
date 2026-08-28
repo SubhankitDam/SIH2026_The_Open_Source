@@ -20,7 +20,7 @@ The application will have 4 different IDs based on authority:
 * Every rural area has their own local doctors. They all write prescriptions with varying
 writing styles. Solutions 1 and 2 proposed for this problem.
 
-#### ID Roles:
+### ID Roles:
 
 * **Patient ID:**<br>
 Every patient will have a unique ID generated either by a doctor or by themselves
@@ -48,7 +48,7 @@ respective nurse can proceed further.<br><br>
 Admin ID will be with us. We can of course see every record of the doctors, nurses and the
 patients in each hospital.
 
-#### Security:
+### Security:
 * **Password Aging:**<br>
 automatically prompt the user to change their password after some days
 (_45 - 60 days probably??_)
@@ -56,7 +56,7 @@ automatically prompt the user to change their password after some days
 Revoke the ability to take screenshots of the website / application
 * **Session timeout for initial security of the website**
 
-#### Sudip's Problem (Mentioned in the group call)
+### Sudip's Problem (Mentioned in the group call)
 * **Password not matching:** when doing a hackathon project in his school
 (a pretty common problem in many sites actually).
 
