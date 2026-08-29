@@ -6,7 +6,8 @@
 * __Category__: Software
 * __Theme__: MedTech / BioTech / HealthTech
 
-### Assigned Group Name for this Project: BWU Cybernexus
+### Assigned Group Name for this Project: BWU CyberNexus
+<img src="./docs/img/BWU_CyberNexus_Logo.png" alt="BWU CyberNexus" width="1254" height="1254" style="width: 200px; height: auto; border-radius: 50%; margin: 0 auto; display: block;"/>
 
 ## Official Members (GitHub Profiles):
 1. BWU/BCC/24/040 - [Pranay Das Adhikary](https://github.com/Pranaydasadhikary)
