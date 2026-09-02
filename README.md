@@ -12,7 +12,7 @@
 ## Official Members (GitHub Profiles):
 1. BWU/BCC/24/040 - [Pranay Das Adhikary](https://github.com/Pranaydasadhikary) (**Collaborator**)
 2. BWU/BCC/24/035 - [Subhankit Dam](https://github.com/SubhankitDam) (**Owner**)
-3. BWU/BTA/25/266 - Ayantika Bhunia (pending GitHub link)
+3. BWU/BTA/25/266 - [Ayantika Bhunia](https://github.com/ayantikabhunia)
 4. BWU/BCC/24/086 - [Sudip Kumar Banerjee](https://github.com/SudipKr-Banerjee)
 5. BWU/BCC/24/039 - [Samir Kandu](https://github.com/samirkandu636-lab)
 6. BWU/BTA/24/452 - [Manusri Karmakar](https://github.com/Manusri-5)
