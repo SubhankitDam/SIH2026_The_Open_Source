@@ -1,0 +1,37 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "tsx ./server.ts",
+    "build": "tsc",
+    "start:dev": "tsx watch --clear-screen=false ./server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@manuth/typescript-eslint-plugin": "^1.4.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "eslint": "^10.9.1",
+    "morgan": "^1.12.0",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.69.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.3.0"
+  }
+}
