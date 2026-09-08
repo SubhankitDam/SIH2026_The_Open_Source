@@ -1,0 +1,98 @@
+erDiagram
+    USERS ||--o| PATIENTS : "has profile"
+    USERS ||--o| DOCTORS : "has profile"
+    USERS ||--o| NURSES : "has profile"
+    USERS ||--o| ADMINS : "has profile"
+    USERS ||--o{ ATTACHMENTS : uploads
+    PATIENTS ||--o{ CASE_RECORDS : "has visits"
+    DOCTORS ||--o{ CASE_RECORDS : "attends"
+    CASE_RECORDS ||--o{ PRESCRIPTIONS : includes
+    CASE_RECORDS ||--o{ ATTACHMENTS : includes
+
+    USERS {
+        uuid id PK
+        varchar login_id UK "9-digit numeric"
+        varchar phone_number UK
+        varchar pin_hash
+        enum role
+        boolean is_active
+        timestamptz last_login_at
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    PATIENTS {
+        varchar patient_id PK
+        uuid user_id FK
+        varchar full_name
+        date dob
+        enum gender
+        text address
+        varchar emergency_contact
+        varchar blood_group
+    }
+
+    DOCTORS {
+        varchar doctor_id PK
+        uuid user_id FK
+        varchar full_name
+        varchar specialization
+        varchar license_number UK
+        int years_experience
+    }
+
+    NURSES {
+        varchar nurse_id PK
+        uuid user_id FK
+        varchar full_name
+        enum shift
+    }
+
+    ADMINS {
+        varchar admin_id PK
+        uuid user_id FK
+        varchar full_name
+    }
+
+    CASE_RECORDS {
+        varchar case_id PK
+        varchar patient_id FK
+        varchar doctor_id FK
+        uuid recorded_by_user_id FK
+        text chief_complaint
+        varchar symptom_location
+        enum severity
+        int duration_value
+        varchar duration_unit
+        text triggers
+        text past_medical_history
+        text diagnosis
+        text prescribed_treatment
+        boolean follow_up_required
+        date follow_up_date
+        enum status
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    PRESCRIPTIONS {
+        varchar prescription_id PK
+        varchar case_id FK
+        varchar medicine_name
+        varchar dosage
+        varchar frequency
+        int duration_value
+        varchar duration_unit
+        text instructions
+        timestamptz created_at
+    }
+
+    ATTACHMENTS {
+        varchar attachment_id PK
+        varchar case_id FK
+        uuid uploaded_by_user_id FK
+        text file_url
+        enum file_type
+        varchar original_filename
+        timestamptz uploaded_at
+    }
