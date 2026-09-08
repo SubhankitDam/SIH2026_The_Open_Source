@@ -1,0 +1,9 @@
+\i 01_enums.sql
+\i 02_users.sql
+\i 03_patients.sql
+\i 04_doctors.sql
+\i 05_nurses.sql
+\i 06_admins.sql
+\i 07_case_records.sql
+\i 08_prescriptions.sql
+\i 09_attachments.sql
