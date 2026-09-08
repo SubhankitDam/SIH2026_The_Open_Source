@@ -18,6 +18,8 @@
     "@manuth/typescript-eslint-plugin": "^1.4.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/pg": "^8.23.1",
     "eslint": "^10.9.1",
     "morgan": "^1.12.0",
     "prettier": "^3.9.6",
@@ -32,6 +34,8 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "helmet": "^8.3.0"
+    "hcaptcha": "^0.2.0",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.0"
   }
 }
