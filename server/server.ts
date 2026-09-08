@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import morgan from "morgan";
 import rootRouter from "./routes";
 
 const app = express();
@@ -15,12 +16,9 @@ const corsOptions = {
 app.use(helmet());
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use("/api/v1", rootRouter);
+app.use(morgan("dev"));
 
-// Redirect / to /api/v1
-app.get("/", (req, res) => {
-  res.redirect(307, "/api/v1");
-});
+app.use("/api/v1", rootRouter);
 
 // Listen on the specified port
 app.listen(PORT, () =>
