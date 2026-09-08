@@ -14,7 +14,6 @@ CREATE TABLE users
     user_id       UUID PRIMARY KEY            DEFAULT gen_random_uuid(),
     login_id      VARCHAR(9) UNIQUE  NOT NULL,
     phone_number  VARCHAR(15) UNIQUE NOT NULL,
-    pin_hash      VARCHAR(255)       NOT NULL,
     role          user_role          NOT NULL,
     is_active     BOOLEAN            NOT NULL DEFAULT TRUE,
     last_login_at TIMESTAMPTZ,
