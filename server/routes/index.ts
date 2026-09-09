@@ -1,12 +1,13 @@
 import { Router } from "express";
-import loginRouter from "./login";
+import authRouter from "./auth";
 
 const rootRouter = Router();
 
+// Test that the '/api/v1' route is working correctly
 rootRouter.get("/", (_, res) => {
-  return res.json({ message: "Home Page" });
+  return res.json({ message: "This is the '/api/v1' route." });
 });
 
-rootRouter.use("/login", loginRouter);
+rootRouter.use("/auth", authRouter);
 
 export default rootRouter;
