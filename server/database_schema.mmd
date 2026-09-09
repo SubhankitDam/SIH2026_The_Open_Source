@@ -10,7 +10,7 @@ erDiagram
     CASE_RECORDS ||--o{ ATTACHMENTS : includes
 
     USERS {
-        uuid id PK
+        uuid user_id PK
         varchar login_id UK "9-digit numeric"
         varchar phone_number UK
         enum role
