@@ -1,0 +1,303 @@
+/*=========================
+  Shared Dashboard Style Section
+  Reuses the same color palette and design language as App.css
+  (primary blue #087fb8 / #1088c4, navy text #103f75 / #123f70)
+=========================*/
+
+.dashboard-page {
+  min-height: 100vh;
+  background: #f7fbfd;
+  padding: 32px 5vw 60px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Top bar with profile summary */
+.dashboard-topbar {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.dashboard-title {
+  color: #103f75;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.dashboard-subtitle {
+  color: #527797;
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+.logout-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid #dbe8ef;
+  background: #ffffff;
+  color: #365a75;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+/* Profile card */
+.profile-card {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  background: #ffffff;
+  border: 1px solid #e7eef4;
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e8f5ff;
+  color: #087ec1;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.profile-info h2 {
+  margin: 0 0 4px;
+  color: #103f75;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 8px;
+}
+
+.profile-meta span {
+  font-size: 13px;
+  color: #5c7890;
+}
+
+.profile-meta strong {
+  color: #123f70;
+  font-weight: 600;
+}
+
+.profile-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: #e8f5ff;
+  color: #087ec1;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* Section wrapper */
+.dashboard-section {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+}
+
+.dashboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.dashboard-section-header h3 {
+  color: #103f75;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.new-case-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #1088c4;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(8, 125, 169, 0.18);
+  transition: 0.2s ease;
+}
+
+.new-case-btn:hover {
+  background: #0874aa;
+  transform: translateY(-1px);
+}
+
+/* Case list */
+.case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-card {
+  background: #ffffff;
+  border: 1px solid #e7eef4;
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.case-card:hover {
+  border-color: #a9d7ef;
+  box-shadow: 0 4px 14px rgba(16, 63, 117, 0.06);
+}
+
+.case-card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.case-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.case-id {
+  font-size: 12px;
+  color: #7690a4;
+  font-weight: 600;
+}
+
+.case-complaint {
+  color: #123f70;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.case-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 13px;
+  color: #7690a4;
+}
+
+.case-card-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-mild { background: #f0fdf4; color: #15803d; }
+.badge-moderate { background: #fffbeb; color: #b45309; }
+.badge-severe { background: #fef2f2; color: #b91c1c; }
+
+.badge-open { background: #eff9ff; color: #1088c4; }
+.badge-in_progress { background: #fffbeb; color: #b45309; }
+.badge-resolved { background: #f0fdf4; color: #15803d; }
+.badge-follow_up_required { background: #fef2f2; color: #b91c1c; }
+
+/* Empty state */
+.empty-state {
+  background: #ffffff;
+  border: 1px dashed #dbe8ef;
+  border-radius: 14px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #7690a4;
+  font-size: 14px;
+}
+
+/* Stat cards row (used on doctor/nurse dashboards) */
+.stat-row {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e7eef4;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.stat-card .stat-label {
+  font-size: 13px;
+  color: #7690a4;
+  margin-bottom: 6px;
+}
+
+.stat-card .stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #103f75;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .dashboard-page {
+    padding: 24px 20px 50px;
+  }
+
+  .profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .case-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .case-card-side {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

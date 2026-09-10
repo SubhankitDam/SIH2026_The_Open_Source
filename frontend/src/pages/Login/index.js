@@ -22,8 +22,8 @@ const LoginPage = () => { // the main component — everything below runs every 
     // setMode: the function used to change it (e.g. when the user clicks a tab).
 
     const [loginData, setLoginData] = useState({ // holds the current values of the login form
-        identifier: "", // stores either the User ID or Phone number entered by the user
-        password: "", // stores the password entered by the user
+        loginId: "", // stores the 9-digit login ID entered by the user
+        phone: "", // stores the registered phone number entered by the user (used together with loginId for 2FA lookup)
     });
 
     const [registerData, setRegisterData] = useState({ // holds all the current values of the registration form, one key per input.
@@ -296,37 +296,61 @@ const LoginPage = () => { // the main component — everything below runs every 
     // Submit
     // -----------------------------
 
+    // MOCK MODE — for demoing without a live backend.
+    // Maps the login ID's 3-digit role prefix (matches the real users.login_id
+    // format we designed: 101=patient, 102=doctor, 103=nurse, 104=admin) to a
+    // dashboard route. Set to false once /api/v1/auth/login is actually wired up.
+    const MOCK_MODE = true;
+
+    const ROLE_PREFIX_TO_ROUTE = {
+        "101": "/patient/dashboard",
+        "102": "/doctor/dashboard",
+        "103": "/nurse/dashboard",
+        "104": "/admin/dashboard", // not built yet, included for completeness
+    };
+
     const handleLoginSubmit = async (e) => { // fires when the login form is submitted; async so we can eventually "await" a real API call.
         e.preventDefault(); // stop the browser from doing a full page reload/navigation on form submit.
 
-        const trimmedIdentifier = loginData.identifier.trim(); // remove leading/trailing whitespace from the entered identifier.
-
-        const isPhoneNumber = /^\+?[0-9]{7,15}$/.test(trimmedIdentifier); // regex test: optional leading "+", then 7–15 digits = looks like a phone number.
-
-        const loginType = isPhoneNumber ? "phone" : "userId"; // decide which login method the backend should use based on that test.
-
-        const loginPayload = { // build the object that will be sent to the login API.
-            loginType, // tells the backend whether "identifier" below is a phone number or a user ID.
-            identifier: trimmedIdentifier, // the actual User ID or Phone number the user typed.
-            password: loginData.password, // the password the user typed.
+        const loginPayload = { // build the object that will be sent to the login API — matches POST /api/v1/auth/login's expected body.
+            loginId: loginData.loginId.trim(), // the 9-digit login ID the user typed.
+            phone: loginData.phone.trim(), // the registered phone number the user typed.
         };
 
         try { // wrap the (future) API call so any failure can be caught and shown as an error toast.
-            console.log("Login data:", loginPayload); // placeholder: logs the payload for debugging until a real API call replaces it.
 
-            // Connect this to your login API, e.g.:
-            // const response = await fetch("/api/auth/login", {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify(loginPayload),
-            // });
-            //
-            // if (!response.ok) {
-            //     const errorBody = await response.json().catch(() => null);
-            //     throw new Error(errorBody?.message || "Invalid credentials. Please try again.");
-            // }
+            if (MOCK_MODE) {
+                // ---- Fake the login entirely, no backend involved ----
+                const prefix = loginPayload.loginId.slice(0, 3); // first 3 digits = role prefix
+                const route = ROLE_PREFIX_TO_ROUTE[prefix];
 
-            showNotification("success", "Login successful! Redirecting..."); // show a green success toast (currently always runs, since there's no real API call yet).
+                if (!loginPayload.loginId || loginPayload.loginId.length !== 9 || !route) {
+                    throw new Error("Enter a valid 9-digit login ID (e.g. 101482913 for a patient demo).");
+                }
+
+                showNotification("success", "Login successful! Redirecting...");
+                setTimeout(() => navigate(route), 800); // small delay so the toast is visible before navigating
+                return;
+            }
+
+            // ---- Real backend call (enable once /api/v1/auth/login is ready) ----
+            const response = await fetch("/api/v1/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(loginPayload),
+            });
+
+            if (!response.ok) {
+                const errorBody = await response.json().catch(() => null);
+                throw new Error(errorBody?.message || "Invalid credentials. Please try again.");
+            }
+
+            const { token, role } = await response.json();
+            localStorage.setItem("token", token);
+            localStorage.setItem("role", role);
+
+            showNotification("success", "Login successful! Redirecting...");
+            navigate(`/${role}/dashboard`);
         } catch (error) { // this block runs if the (future) fetch call above throws.
             showNotification( // show a red error toast instead.
                 "error",
@@ -596,53 +620,54 @@ const LoginPage = () => { // the main component — everything below runs every 
                             onSubmit={handleLoginSubmit} // calls our submit handler instead of doing a normal page-reload submit.
                         >
 
-                            <div className="form-field"> {/* wrapper for the identifier input */}
-                                <label htmlFor="login-identifier"> {/* label linked to the input below via htmlFor/id */}
-                                    User ID or Phone number {/* updated label text so users know either value is accepted */}
+                            <div className="form-field"> {/* wrapper for the login ID input */}
+                                <label htmlFor="login-id"> {/* label linked to the input below via htmlFor/id */}
+                                    Login ID
                                 </label>
 
                                 <input
-                                    id="login-identifier" // matches the label's htmlFor so clicking the label focuses this input
-                                    type="text" // changed from "tel" to "text" because a User ID is not a valid phone value
-                                    name="identifier" // must match the loginData key so handleLoginChange updates the right field
-                                    placeholder="Enter your User ID or Phone number" // updated placeholder to reflect both accepted formats
-                                    value={loginData.identifier} // controlled input bound to loginData.identifier
-                                    onChange={handleLoginChange} // updates loginData.identifier on every keystroke
+                                    id="login-id" // matches the label's htmlFor so clicking the label focuses this input
+                                    type="text" // text, not number, so a leading digit is never accidentally stripped
+                                    inputMode="numeric" // hints mobile devices to show a numeric keypad
+                                    pattern="[0-9]{9}" // 9-digit numeric login ID, matches the users.login_id format
+                                    maxLength={9}
+                                    name="loginId" // must match the loginData key so handleLoginChange updates the right field
+                                    placeholder="Enter your 9-digit Login ID" // reflects the actual login_id format
+                                    value={loginData.loginId} // controlled input bound to loginData.loginId
+                                    onChange={handleLoginChange} // updates loginData.loginId on every keystroke
                                     required // form cannot be submitted while this field is empty
                                 />
                             </div>
 
-                            <div className="form-field"> {/* wrapper for the password field */}
-                                <div className="field-header"> {/* row containing the label + "forgot password" link, side by side */}
-                                    <label htmlFor="login-password">
-                                        Password
+                            <div className="form-field"> {/* wrapper for the phone number field */}
+                                <div className="field-header"> {/* row containing the label + "forgot login ID" link, side by side */}
+                                    <label htmlFor="login-phone">
+                                        Phone Number
                                     </label>
 
                                     <button
                                         onClick={() => navigate('/forgot')}
-                                        type="button" // not a submit button — presumably opens a "forgot password" flow (not implemented here).
+                                        type="button" // not a submit button — presumably opens a "forgot login ID" flow (not implemented here).
                                         className="forgot-password"
                                     >
-                                        Forgot password?
+                                        Forgot login ID?
                                     </button>
                                 </div>
 
                                 <input
-                                    id="login-password" // matches the label's htmlFor
-                                    type="password" // masks the typed characters
-                                    name="password" // matches the loginData key
-                                    placeholder="Enter your password"
-                                    value={loginData.password} // controlled input bound to loginData.password
-                                    onChange={handleLoginChange} // updates loginData.password on every keystroke
+                                    id="login-phone" // matches the label's htmlFor
+                                    type="tel" // appropriate input type for a phone number
+                                    name="phone" // matches the loginData key
+                                    placeholder="Enter your registered phone number"
+                                    value={loginData.phone} // controlled input bound to loginData.phone
+                                    onChange={handleLoginChange} // updates loginData.phone on every keystroke
                                     required // must be filled in before submitting
                                 />
                             </div>
 
-                            <label className="checkbox-row"> {/* "Remember me" checkbox + its label, wrapped together so clicking the text toggles it too */}
-                                <input type="checkbox" /> {/* not wired to any state — purely visual/unimplemented for now */}
-
-                                <span>Remember me</span>
-                            </label>
+                            <p className="otp-hint"> {/* reuses the existing .otp-hint style from App.css for a small informational note */}
+                                We'll verify this is really you — OTP-based verification is coming soon.
+                            </p>
 
                             <button className="submit-button" type="submit"> {/* the actual login submit button */}
                                 Sign In
