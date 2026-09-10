@@ -53,7 +53,7 @@ async function generateUniquePatientId(): Promise<string> {
     patientId = generatePatientId();
     const result = await db.query(
       "SELECT 1 FROM patients WHERE patient_id = $1",
-      [patientId],
+      [patientId]
     );
     exists = (result.rowCount ?? 0) > 0;
   }
@@ -63,7 +63,8 @@ async function generateUniquePatientId(): Promise<string> {
 
 registerRouter.post("/", async (req, res) => {
   const {
-    full_name: fullName,
+    first_name: firstName,
+    last_name: lastName,
     phone,
     dob,
     gender,
@@ -72,13 +73,15 @@ registerRouter.post("/", async (req, res) => {
   } = req.body;
 
   if (
-    !fullName ||
+    !firstName ||
+    !lastName ||
     !phone ||
     !dob ||
     !gender ||
     !address ||
     !emergencyContact ||
-    typeof fullName !== "string" ||
+    typeof firstName !== "string" ||
+    typeof lastName !== "string" ||
     typeof phone !== "string" ||
     typeof dob !== "string" ||
     typeof gender !== "string" ||
@@ -94,15 +97,24 @@ registerRouter.post("/", async (req, res) => {
 
     const userResult = await db.query(
       "INSERT INTO users (login_id, phone_number, role) VALUES ($1, $2, 'patient') RETURNING user_id",
-      [loginId, phone],
+      [loginId, phone]
     );
 
     const userId = userResult.rows[0].user_id;
 
     // Insert into patients table
     await db.query(
-      "INSERT INTO patients (patient_id, user_id, full_name, dob, gender, address, emergency_contact) VALUES ($1, $2, $3, $4, $5, $6, $7) ",
-      [patientId, userId, fullName, dob, gender, address, emergencyContact],
+      "INSERT INTO patients (patient_id, user_id, first_name, last_name, dob, gender, address, emergency_contact) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ",
+      [
+        patientId,
+        userId,
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        emergencyContact,
+      ]
     );
 
     return res.json({ loginId, patientId });
