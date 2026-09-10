@@ -1,4 +1,5 @@
 import express from "express";
+import "dotenv/config";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
