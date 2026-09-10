@@ -48,6 +48,8 @@ const LoginPage = () => { // the main component — everything below runs every 
     const [notification, setNotification] = useState(null); // { type: "success" | "error", message: string } | null
     // notification: the toast currently being shown (or null if none). Read by the JSX near the top of the return().
 
+  const documentsRef = useRef(documents);
+
     const videoRef = useRef(null);
     // videoRef: a reference to the <video> DOM element used to show the live camera feed in the scanner modal.
 
@@ -275,6 +277,24 @@ const LoginPage = () => { // the main component — everything below runs every 
             0.92 // ...at 92% quality (a balance between file size and image sharpness).
         );
     };
+
+  useEffect(() => {
+    documentsRef.current = documents;
+  }, [documents]);
+
+  useEffect(() => {
+    return () => {
+      stopCamera();
+      if (notificationTimeoutRef.current) {
+        clearTimeout(notificationTimeoutRef.current);
+      }
+      documentsRef.current.forEach((document) => {
+        if (document.preview) {
+          URL.revokeObjectURL(document.preview);
+        }
+      });
+    };
+  }, []);
 
     useEffect(() => { // runs once when the component mounts (empty dependency array [] below), and its return value runs on UNmount.
         return () => { // this is the CLEANUP function — React calls it when the component is removed from the page.
