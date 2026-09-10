@@ -28,7 +28,7 @@ loginRouter.post("/", async (req, res) => {
       [loginId, phone],
     );
 
-    if (userResult.rowCount === 0) {
+    if (userResult.rowCount === 0 || !userResult.rows[0].is_active) {
       return res.status(404).json({ error: "User does not exist" });
     }
 
