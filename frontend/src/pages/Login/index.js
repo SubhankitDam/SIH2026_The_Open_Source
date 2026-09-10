@@ -310,7 +310,7 @@ const LoginPage = () => { // the main component — everything below runs every 
                 }
             });
         };
-    }, []); // empty array = this effect's setup runs only once (on mount); cleanup runs only once (on unmount).
+    }, [documents]);
 
     // -----------------------------
     // Submit
