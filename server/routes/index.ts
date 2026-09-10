@@ -1,6 +1,8 @@
 import { Router } from "express";
 import authRouter from "./auth";
 import patientsRouter from "./patients";
+import doctorsRouter from "./doctors";
+import nursesRouter from "./nurses";
 
 const rootRouter = Router();
 
@@ -11,5 +13,7 @@ rootRouter.get("/", (_, res) => {
 
 rootRouter.use("/auth", authRouter);
 rootRouter.use("/patients", patientsRouter);
+rootRouter.use("/doctors", doctorsRouter);
+rootRouter.use("/nurses", nursesRouter);
 
 export default rootRouter;
