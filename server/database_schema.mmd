@@ -23,7 +23,8 @@ erDiagram
     PATIENTS {
         varchar patient_id PK
         uuid user_id FK
-        varchar full_name
+        varchar first_name
+        varchar last_name
         date dob
         enum gender
         text address
@@ -34,7 +35,8 @@ erDiagram
     DOCTORS {
         varchar doctor_id PK
         uuid user_id FK
-        varchar full_name
+        varchar first_name
+        varchar last_name
         varchar specialization
         varchar license_number UK
         int years_experience
@@ -43,14 +45,16 @@ erDiagram
     NURSES {
         varchar nurse_id PK
         uuid user_id FK
-        varchar full_name
+        varchar first_name
+        varchar last_name
         enum shift
     }
 
     ADMINS {
         varchar admin_id PK
         uuid user_id FK
-        varchar full_name
+        varchar first_name
+        varchar last_name
     }
 
     CASE_RECORDS {
